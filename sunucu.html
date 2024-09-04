@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bize Katılın - B L A C K M A S T E R</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --button-bg: #4CAF50;
+            --button-text: #ffffff;
+            --accent-color: #4CAF50;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --border-radius: 10px;
+        }
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: #2a2a2a;
+            --button-bg: #45a049;
+            --button-text: #ffffff;
+            --accent-color: #45a049;
+            --shadow: 0 4px 6px rgba(255,255,255,0.1);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .rainbow-text {
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 6s ease-in-out infinite;
+            background-size: 400% 400%;
+        }
+        @keyframes rainbow {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .tools-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .tool-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            width: 300px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .tool-card h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+        }
+        .tool-card button {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .tool-card button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background-color: var(--card-bg);
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            animation: modalFadeIn 0.3s;
+        }
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        .close {
+            color: var(--text-color);
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close:hover,
+        .close:focus {
+            color: var(--accent-color);
+        }
+        #apiLink {
+            word-break: break-all;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        #apiContent {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            padding: 15px;
+            background-color: var(--bg-color);
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .copy-btn {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin-top: 10px;
+        }
+        .copy-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+      <h1 class="rainbow-text">Bize Katılın</h1>
+      <button class="-btn" onclick="location.href='index.html'">⬅️</button>
+    </header>
+    <div class="tools-container">
+        <div class="tool-card">
+            <h2>Discord Sunucumuz</h2>
+            <button onclick="showDetails('ilgincBilgiler')">Detayları Göster</button>
+        </div>
+        <div class="tool-card">
+          Developed By Wlame
+        </div>
+    </div>
+
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <p><strong>API Link:</strong></p>
+            <div id="apiLink"></div>
+            <button onclick="copyApiLink()" class="copy-btn">Linki Kopyala</button>
+            <p><strong>İçerik:</strong></p>
+            <pre id="apiContent"></pre>
+            <button onclick="copyApiContent()" class="copy-btn">İçeriği Kopyala</button>
+        </div>
+    </div>
+
+    <script>
+        const apiDetails = {
+            ilgincBilgiler: {
+                title: "Discord Sunucumuz",
+                link: "https://discord.gg/cbV4YNRtFe",
+                content: "Offical M A S T E R Discord Server"
+            }
+        };
+
+        let currentApi = '';
+
+        function showDetails(api) {
+            currentApi = api;
+            const details = apiDetails[api];
+            document.getElementById('modalTitle').textContent = details.title;
+            document.getElementById('apiLink').textContent = details.link;
+            document.getElementById('apiContent').textContent = details.content;
+            document.getElementById('detailsModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+        }
+
+        function copyApiLink() {
+            navigator.clipboard.writeText(apiDetails[currentApi].link).then(() => {
+                alert('API linki kopyalandı!');
+            });
+        }
+
+        function copyApiContent() {
+            navigator.clipboard.writeText(apiDetails[currentApi].content).then(() => {
+                alert('API içeriği kopyalandı!');
+            });
+        }
+
+        // Karanlık mod kontrolü
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData && userData.darkMode) {
+                document.body.classList.add('dark-mode');
+            }
+        }
+
+        window.addEventListener('load', loadUserData);
+
+        // Modal dışına tıklandığında kapatma
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('detailsModal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - B L A C K M A S T E R</title>
+  <link rel="icon" href="https://cdn.glitch.global/5f942ec0-65e7-4a14-bdfb-193bb60203c9/IMG_4416.gif?v=1725450064606" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+            --button-bg: #ffffff;
+            --button-text: #333333;
+            --accent-color: #4CAF50;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --border-radius: 10px;
+        }
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --button-bg: #2a2a2a;
+            --button-text: #ffffff;
+            --accent-color: #45a049;
+            --shadow: 0 4px 6px rgba(255,255,255,0.1);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: all 0.3s ease;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+        .rainbow-text {
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 6s ease-in-out infinite;
+            background-size: 400% 400%;
+        }
+        @keyframes rainbow {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .settings-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: transform 0.3s ease;
+        }
+        .settings-btn:hover {
+            transform: rotate(90deg);
+        }
+        .profile-box {
+            background-color: var(--button-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 30px;
+            max-width: 300px;
+            width: 100%;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        #userAvatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        #username {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            max-width: 300px;
+        }
+        .nav-btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--button-text);
+            background-color: var(--button-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        @media (max-width: 600px) {
+            .rainbow-text {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="rainbow-text">B L A C K M A S T E R</h1>
+        <button class="settings-btn" onclick="location.href='settings.html'">⚙️</button>
+    </header>
+    
+  <div class="profile-box">
+        Selam <span id="username">Kullanıcı</span>!
+    </div>
+    
+    <nav>
+        <button class="nav-btn" onclick="location.href='sunucu.html'">Bize Katılın</button>
+        <button class="nav-btn" onclick="location.href='apiler.html'">API Hizmetlerimiz</button>
+        <button class="nav-btn" onclick="location.href='comments.html'">Yorumlar</button>
+        <button class="nav-btn" onclick="location.href='diğer-siteler.html'">Diğer Örnek Sitelerimiz</button>
+    </nav>
+
+    <footer>
+        <p>2024© B L A C K M A S T E R Tüm hakları saklıdır.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+        });
+
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('userData')) || {};
+            
+            // Kullanıcı adını yükle
+            const usernameElement = document.getElementById('username');
+            usernameElement.textContent = userData.username || 'Kullanıcı';
+            
+            // Avatar'ı yükle
+            const avatarElement = document.getElementById('userAvatar');
+            avatarElement.src = userData.avatarUrl || 'default-avatar.png';
+            
+            // Karanlık mod kontrolü
+            if (userData.darkMode) {
+                document.body.classList.add('dark-mode');
+            }
+            
+            // Arka plan resmi kontrolü
+            if (userData.bgImage) {
+                document.body.style.backgroundImage = `url(${userData.bgImage})`;
+            }
+        }
+    </script>
+</body>
+</html>
