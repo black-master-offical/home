@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayarlar - B L A C K M A S T E R</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+            --button-bg: #ffffff;
+            --button-text: #333333;
+            --accent-color: #4CAF50;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --border-radius: 10px;
+        }
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --button-bg: #2a2a2a;
+            --button-text: #ffffff;
+            --accent-color: #45a049;
+            --shadow: 0 4px 6px rgba(255,255,255,0.1);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: all 0.3s ease;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 30px;
+        }
+        .rainbow-text {
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 6s ease-in-out infinite;
+            background-size: 400% 400%;
+        }
+        @keyframes rainbow {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .home-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: transform 0.3s ease;
+        }
+        .home-btn:hover {
+            transform: scale(1.1);
+        }
+        .settings-container {
+            background-color: var(--button-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: var(--shadow);
+        }
+        .setting-item {
+            margin-bottom: 25px;
+        }
+        .setting-item label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        .setting-item input[type="text"],
+        .setting-item input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--text-color);
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        #status-message {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        .admin-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--button-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        .admin-panel h3 {
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        .admin-panel input, 
+        .admin-panel textarea {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid var(--text-color);
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        .admin-panel button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .admin-panel button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .rainbow-text {
+                font-size: 2rem;
+            }
+            .settings-container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="rainbow-text">B L A C K M A S T E R - Ayarlar</h1>
+        <button class="home-btn" onclick="location.href='index.html'">🏠</button>
+    </header>
+    <main class="settings-container">
+        <div class="setting-item">
+            <label for="darkMode">Karanlık Mod</label>
+            <label class="toggle-switch">
+                <input type="checkbox" id="darkMode">
+                <span class="slider"></span>
+            </label>
+        </div>
+        <div class="setting-item">
+            <label for="username">Kullanıcı Adı</label>
+            <input type="text" id="username" placeholder="Kullanıcı adınızı girin">
+        </div>
+        <div class="setting-item">
+            <label for="avatarUrl">Avatar URL</label>
+            <input type="text" id="avatarUrl" placeholder="Avatar resmi URL'sini girin">
+        </div>
+        <div class="setting-item">
+            <label for="bgImage">Arka Plan Resmi</label>
+            <input type="file" id="bgImage" accept="image/*">
+        </div>
+        <button id="saveSettings" class="submit-btn">Kaydet</button>
+        <div id="status-message"></div>
+    </main>
+    <button id="adminPanelBtn" class="submit-btn">Admin Paneli</button>
+    <div id="adminPanel" class="admin-panel" style="display: none;">
+        <h3>Admin Paneli</h3>
+        <input type="text" id="commentId" placeholder="Yorum ID">
+        <textarea id="deleteReason" placeholder="Silme sebebi"></textarea>
+        <button onclick="deleteComment()">Yorumu Sil</button>
+    </div>
+
+    <script>
+        const darkModeToggle = document.getElementById('darkMode');
+        const usernameInput = document.getElementById('username');
+        const avatarUrlInput = document.getElementById('avatarUrl');
+        const bgImageInput = document.getElementById('bgImage');
+        const saveButton = document.getElementById('saveSettings');
+        const adminPanelBtn = document.getElementById('adminPanelBtn');
+        const adminPanel = document.getElementById('adminPanel');
+
+        const BIN_ID = '66c90e42e41b4d34e4245a90';
+        const API_KEY = '$2a$10$.o.WaeVsZ6qGShJ3MXbwgOTwARpMREoWjsjRDx6KAC0M3c5N9z/BS';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+        });
+
+        function loadSettings() {
+            const userData = JSON.parse(localStorage.getItem('userData')) || {};
+            darkModeToggle.checked = userData.darkMode || false;
+            usernameInput.value = userData.username || '';
+            avatarUrlInput.value = userData.avatarUrl || '';
+            if (userData.bgImage) {
+                document.body.style.backgroundImage = `url(${userData.bgImage})`;
+            }
+            applyDarkMode(userData.darkMode);
+        }
+
+        function applyDarkMode(isDarkMode) {
+            document.body.classList.toggle('dark-mode', isDarkMode);
+        }
+
+        darkModeToggle.addEventListener('change', () => {
+            applyDarkMode(darkModeToggle.checked);
+        });
+
+        saveButton.addEventListener('click', () => {
+            const userData = {
+                darkMode: darkModeToggle.checked,
+                username: usernameInput.value,
+                avatarUrl: avatarUrlInput.value
+            };
+
+            if (bgImageInput.files.length > 0) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    userData.bgImage = reader.result;
+                    document.body.style.backgroundImage = `url(${userData.bgImage})`;
+                    saveUserData(userData);
+                }
+                reader.readAsDataURL(bgImageInput.files[0]);
+            } else {
+                saveUserData(userData);
+            }
+        });
+
+        function saveUserData(userData) {
+            localStorage.setItem('userData', JSON.stringify(userData));
+            setStatusMessage('Ayarlar kaydedildi!');
+        }
+
+        function setStatusMessage(message) {
+            const statusElement = document.getElementById('status-message');
+            statusElement.textContent = message;
+            setTimeout(() => {
+                statusElement.textContent = '';
+            }, 3000);
+        }
+
+        adminPanelBtn.addEventListener('click', () => {
+            const password = prompt("Admin Şifresini Girin:");
+            if (password === "masterkral") {
+                adminPanel.style.display = 'block';
+                localStorage.setItem('isAdmin', 'true');
+            } else {
+                alert("Yanlış şifre!");
+                localStorage.setItem('isAdmin', 'false');
+            }
+        });
+
+        function deleteComment() {
+            const commentId = document.getElementById('commentId').value;
+            const deleteReason = document.getElementById('deleteReason').value;
+
+            if (!commentId || !deleteReason) {
+                alert('Lütfen yorum ID ve silme sebebini girin.');
+                return;
+            }
+
+            fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                method: 'GET',
+                headers: {
+                    'X-Master-Key': API_KEY
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                let comments = data.record.comments;
+                const commentIndex = comments.findIndex(comment => comment.id === commentId);
+                if (commentIndex !== -1) {
+                    comments.splice(commentIndex, 1);
+                    return fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': API_KEY
+                        },
+                        body: JSON.stringify({ comments: comments })
+                    });
+                } else {
+                    throw new Error('Yorum bulunamadı');
+                }
+            })
+            .then(response => response.json())
+            .then(() => {
+                setStatusMessage('Yorum başarıyla silindi!');
+                document.getElementById('commentId').value = '';
+                document.getElementById('deleteReason').value = '';
+            })
+            .catch(error => {
+                console.error('Yorum silinirken hata oluştu:', error);
+                setStatusMessage('Yorum silinirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+            });
+        }
+    </script>
+</body>
+</html>
