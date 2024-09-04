@@ -167,7 +167,14 @@
             <h2>Discord Sunucumuz</h2>
             <button onclick="showDetails('ilgincBilgiler')">Detayları Göster</button>
         </div>
-        <div class="tool-card">
+      <div class="tool-card">
+        <h2>
+          Mail Adresimiz
+        </h2>
+        
+        <button onclick="showDetails('gmail')">Detayları Göster</button>
+      </div>
+      <div class="tool-card">
           Developed By Wlame
         </div>
     </div>
@@ -176,10 +183,10 @@
         <div class="modal-content">
             <span class="close" onclick="closeModal()">&times;</span>
             <h2 id="modalTitle"></h2>
-            <p><strong>API Link:</strong></p>
+            <p><strong>Link:</strong></p>
             <div id="apiLink"></div>
             <button onclick="copyApiLink()" class="copy-btn">Linki Kopyala</button>
-            <p><strong>İçerik:</strong></p>
+            <p><strong>Açıklama:</strong></p>
             <pre id="apiContent"></pre>
             <button onclick="copyApiContent()" class="copy-btn">İçeriği Kopyala</button>
         </div>
@@ -191,7 +198,12 @@
                 title: "Discord Sunucumuz",
                 link: "https://discord.gg/cbV4YNRtFe",
                 content: "Offical M A S T E R Discord Server"
-            }
+            },
+          gmail: {
+          title: "İletişim Email",
+            link: "infoblackmaster7@gmail.com",
+            content: "Orjinal BlackMaster Yardım Mail Adresi"
+        }
         };
 
         let currentApi = '';
