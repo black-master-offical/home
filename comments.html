@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yorumlar - B L A C K M A S T E R</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --button-bg: #4CAF50;
+            --button-text: #ffffff;
+            --accent-color: #4CAF50;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --border-radius: 10px;
+        }
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-bg: #2a2a2a;
+            --button-bg: #45a049;
+            --button-text: #ffffff;
+            --accent-color: #45a049;
+            --shadow: 0 4px 6px rgba(255,255,255,0.1);
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .rainbow-text {
+            font-size: 2.5rem;
+            font-weight: 600;
+            background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #8b00ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbow 6s ease-in-out infinite;
+            background-size: 400% 400%;
+        }
+        @keyframes rainbow {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        .home-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: transform 0.3s ease;
+        }
+        .home-btn:hover {
+            transform: scale(1.1);
+        }
+        .comments-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .comment-form {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+        .comment-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--text-color);
+            border-radius: 5px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: var(--accent-color);
+        }
+        .comments-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .comment {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: flex-start;
+        }
+        .comment-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+        .comment-content {
+            flex-grow: 1;
+        }
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .comment-username {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .comment-date {
+            font-size: 0.8rem;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        .comment-text {
+            line-height: 1.5;
+        }
+        .comment-menu {
+            position: relative;
+        }
+        .comment-menu-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+        .comment-menu-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: var(--card-bg);
+            border-radius: 5px;
+            box-shadow: var(--shadow);
+            z-index: 1;
+        }
+        .comment-menu-content button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: left;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+        .comment-menu-content button:hover {
+            background-color: var(--bg-color);
+        }
+        #status-message {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        @media (max-width: 600px) {
+            .rainbow-text {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="rainbow-text">B L A C K M A S T E R - Yorumlar</h1>
+        <button class="home-btn" onclick="location.href='index.html'">🏠</button>
+    </header>
+    <main class="comments-container">
+        <div id="comment-form" class="comment-form">
+            <textarea id="comment-input" rows="4" placeholder="Yorumunuzu buraya yazın..."></textarea>
+            <button onclick="addComment()" class="submit-btn">Yorum Ekle</button>
+        </div>
+        <div id="status-message"></div>
+        <ul id="comments-list" class="comments-list">
+            <!-- Yorumlar buraya eklenecek -->
+        </ul>
+    </main>
+
+    <script>
+        const BIN_ID = '66c90e42e41b4d34e4245a90';
+        const API_KEY = '$2a$10$.o.WaeVsZ6qGShJ3MXbwgOTwARpMREoWjsjRDx6KAC0M3c5N9z/BS';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserData();
+            loadComments();
+        });
+
+        function loadUserData() {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            if (userData) {
+                if (userData.darkMode) {
+                    document.body.classList.add('dark-mode');
+                }
+                if (userData.bgImage) {
+                    document.body.style.backgroundImage = `url(${userData.bgImage})`;
+                }
+            }
+        }
+
+        function loadComments() {
+            fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                headers: {
+                    'X-Master-Key': API_KEY
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const comments = data.record.comments || [];
+                const commentsList = document.getElementById('comments-list');
+                commentsList.innerHTML = '';
+                const currentUser = JSON.parse(localStorage.getItem('userData'))?.username;
+                let userHasComment = false;
+
+                comments.forEach(comment => {
+                    if (comment.username === currentUser) {
+                        userHasComment = true;
+                    }
+
+                    const li = document.createElement('li');
+                    li.className = 'comment';
+                    li.innerHTML = `
+                        <img src="${comment.avatar || 'https://via.placeholder.com/50'}" alt="Avatar" class="comment-avatar">
+                        <div class="comment-content">
+                            <div class="comment-header">
+                                <span class="comment-username">${comment.username || 'Anonim'}</span>
+                                <span class="comment-date">${formatDate(comment.yorum_tarih)}</span>
+                            </div>
+                            <p class="comment-text">${comment.content}</p>
+                        </div>
+                        <div class="comment-menu">
+                            <button class="comment-menu-btn">⋮</button>
+                            <div class="comment-menu-content">
+                                ${comment.username === currentUser ? 
+                                    `<button onclick="deleteComment('${comment.id}')">Yorumu Sil</button>` : ''}
+                                <button onclick="copyCommentId('${comment.id}')">Yorum ID Kopyala</button>
+                            </div>
+                        </div>
+                    `;
+                    commentsList.appendChild(li);
+                });
+
+                setupCommentMenus();
+
+                // Kullanıcının zaten yorumu varsa yorum formunu gizle
+                const commentForm = document.getElementById('comment-form');
+                if (userHasComment) {
+                    commentForm.style.display = 'none';
+                    setStatusMessage('Zaten bir yorum yaptınız. Başka yorum yapamazsınız.');
+                } else {
+                    commentForm.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Yorumlar yüklenirken hata oluştu:', error);
+                setStatusMessage('Yorumlar yüklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+            });
+        }
+
+        function addComment() {
+            const commentInput = document.getElementById('comment-input');
+            const content = commentInput.value.trim();
+            if (content) {
+                const userData = JSON.parse(localStorage.getItem('userData')) || {};
+                const newComment = {
+                    id: Date.now().toString(),
+                    username: userData.username || 'Anonim',
+                    avatar: userData.avatarUrl || 'https://via.placeholder.com/50',
+                    content: content,
+                    yorum_tarih: new Date().toISOString()
+                };
+
+                fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Master-Key': API_KEY
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const comments = data.record.comments || [];
+                    const userHasComment = comments.some(comment => comment.username === userData.username);
+                    
+                    if (userHasComment) {
+                        setStatusMessage('Zaten bir yorum yaptınız. Başka yorum yapamazsınız.');
+                        return Promise.reject('User already has a comment');
+                    }
+
+                    comments.unshift(newComment);
+                    return fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': API_KEY
+                        },
+                        body: JSON.stringify({ comments: comments })
+                    });
+                })
+                .then(() => {
+                    commentInput.value = '';
+                    setStatusMessage('Yorumunuz başarıyla eklendi!');
+                    loadComments();
+                })
+                .catch(error => {
+                    console.error('Yorum eklenirken hata oluştu:', error);
+                    if (error !== 'User already has a comment') {
+                        setStatusMessage('Yorum eklenirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+                    }
+                });
+            }
+        }
+
+        function deleteComment(id) {
+            if (confirm('Bu yorumu silmek istediğinizden emin misiniz?')) {
+                fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Master-Key': API_KEY
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const comments = data.record.comments.filter(comment => comment.id !== id);
+                    return fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': API_KEY
+                        },
+                        body: JSON.stringify({ comments: comments })
+                    });
+                })
+                .then(() => {
+                    setStatusMessage('Yorum başarıyla silindi!');
+                    loadComments();
+                })
+                .catch(error => {
+                    console.error('Yorum silinirken hata oluştu:', error);
+                    setStatusMessage('Yorum silinirken bir hata oluştu. Lütfen daha sonra tekrar deneyin.');
+                });
+            }
+        }
+
+        function copyCommentId(id) {
+            navigator.clipboard.writeText(id).then(() => {
+                alert('Yorum ID kopyalandı!');
+            });
+        }
+
+        function setupCommentMenus() {
+            document.querySelectorAll('.comment-menu-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const content = btn.nextElementSibling;
+                    content.style.display = content.style.display === 'block' ? 'none' : 'block';
+                });
+            });
+
+            document.addEventListener('click', () => {
+                document.querySelectorAll('.comment-menu-content').forEach(menu => {
+                    menu.style.display = 'none';
+                });
+            });
+        }
+
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            return new Date(dateString).toLocaleDateString('tr-TR', options);
+        }
+
+        function setStatusMessage(message) {
+            const statusElement = document.getElementById('status-message');
+            statusElement.textContent = message;
+            setTimeout(() => {
+                statusElement.textContent = '';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
